@@ -1,0 +1,43 @@
+version: '3.8'
+name: avalon-teamspeak
+
+services:
+  teamspeak:
+    image: teamspeak
+    container_name: teamspeak
+    restart: always
+    depends_on:
+      - mariadb
+    ports:
+      - "9987:9987/udp"      # Voice
+      - "10011:10011"        # ServerQuery
+      - "30033:30033"        # File transfers
+      - "41144:41144"        # ServerQuery Events
+    environment:
+      TS3SERVER_LICENSE: accept
+      TS3SERVER_DB_PLUGIN: ts3db_mariadb
+      TS3SERVER_DB_SQLCREATEPATH: create_mariadb
+      TS3SERVER_DB_HOST: mariadb
+      TS3SERVER_DB_USER: ts3
+      TS3SERVER_DB_PASSWORD: your_strong_password
+      TS3SERVER_DB_NAME: ts3
+      TS3SERVER_SERVERADMIN_PASSWORD: your_admin_query_password   # Optional: for remote query login
+      TS3SERVER_SERVER_NAME: "My Awesome TS Server"                # Custom name (only on first launch)
+    volumes:
+      - teamspeak_data:/var/ts3server
+
+  mariadb:
+    image: mariadb:10.5
+    container_name: ts3-mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: your_root_password
+      MYSQL_DATABASE: ts3
+      MYSQL_USER: ts3
+      MYSQL_PASSWORD: your_strong_password
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  teamspeak_data:
+  mariadb_data:
