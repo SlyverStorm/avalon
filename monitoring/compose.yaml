@@ -1,4 +1,4 @@
-version: '3.8'
+name: monitoring
 
 networks:
   monitoring:
@@ -11,6 +11,9 @@ services:
     volumes:
       - prometheus_data:/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--storage.tsdb.retention.time=7d'
+      - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
       - "9090:9090"
     networks:
