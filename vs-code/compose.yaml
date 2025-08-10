@@ -1,0 +1,23 @@
+name: vs-code
+
+networks:
+  reverse_proxy_net:
+    external: true
+
+
+services:
+  code-server:
+    image: coder/code-server:latest
+    container_name: code-server
+    user: "${UID}:${GID}"
+    environment:
+      - PASSWORD=${PASSWORD}
+    volumes:
+      - /home/code-projects:/home/coder/project
+      - code-server-data:/home/coder/.local/share/code-server
+    ports:
+      - "8443:8443"
+    restart: unless-stopped
+
+volumes:
+  code-server-data:

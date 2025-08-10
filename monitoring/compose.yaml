@@ -1,8 +1,11 @@
-name: monitoring
+name: avalon-monitoring
 
 networks:
   monitoring:
     driver: bridge
+    internal: true
+  reverse_proxy_net:
+    external: true
 
 services:
   prometheus:
