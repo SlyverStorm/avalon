@@ -91,10 +91,10 @@ docker run --rm \
   -v $(pwd)/certbot/conf:/etc/letsencrypt \
   certbot/certbot certonly --webroot \
   --webroot-path=/var/www/certbot \
-  --email your@email.com \
-  --agree-tos \
-  --no-eff-email \
-  -d slyverstorm.dev -d www.slyverstorm.dev
+  --email imawaltermelon@gmail.com --agree-tos --no-eff-email \
+  --force-renewal \
+  --cert-name slyverstorm.dev \
+  -d slyverstorm.dev -d www.slyverstorm.dev -d grafana.slyverstorm.dev -d portainer.slyverstorm.dev
 
 ```
 If successful, your certs will be in: `certbot/conf/live/slyverstorm.dev/`

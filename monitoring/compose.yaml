@@ -4,7 +4,7 @@ networks:
   monitoring:
     driver: bridge
     internal: true
-  reverse_proxy_net:
+  avalon-reverse-proxy-net:
     external: true
 
 services:
@@ -56,11 +56,15 @@ services:
     ports:
       - "3000:3000"
     environment:
+      - GF_SERVER_ROOT_URL=https://grafana.slyverstorm.dev/
+      - GF_SERVER_SERVE_FROM_SUB_PATH=false
+      - GF_SERVER_DOMAIN=grafana.slyverstorm.dev
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - grafana_data:/var/lib/grafana
     networks:
       - monitoring
+      - avalon-reverse-proxy-net
     restart: unless-stopped
 
 volumes:

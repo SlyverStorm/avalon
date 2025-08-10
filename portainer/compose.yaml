@@ -1,7 +1,7 @@
 name: avalon-portainer
 
 networks:
-  reverse_proxy_net:
+  avalon-reverse-proxy-net:
     external: true
 
 services:
@@ -9,6 +9,8 @@ services:
     image: portainer/portainer-ce:lts
     container_name: portainer
     restart: always
+    networks:
+      - avalon-reverse-proxy-net
     ports:
       - "8000:8000"
       - "9443:9443"
