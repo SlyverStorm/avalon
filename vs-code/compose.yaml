@@ -1,4 +1,4 @@
-name: vs-code
+name: avalon-vs-code
 
 networks:
   avalon-reverse-proxy-net:
@@ -7,19 +7,19 @@ networks:
 
 services:
   code-server:
-    image: coder/code-server:latest
+    image: lscr.io/linuxserver/code-server:latest
     container_name: code-server
-    user: "${UID}:${GID}"
     environment:
-      - PASSWORD=${PASSWORD}
+      - PUID=${UID}                # your user ID
+      - PGID=${GID}                # your group ID
+      - PASSWORD=${PASSWORD}       # or use HASHED_PASSWORD
+      - TZ=Europe/Paris            # adjust if needed
     volumes:
-      - /home/code-projects:/home/coder/project
-      - code-server-data:/home/coder/.local/share/code-server
+      - /home/slyverstorm/code-projects:/config/workspace   # root of all git repositories
+      - code-server-config:/config
     ports:
       - "8443:8443"
     restart: unless-stopped
-    networks:
-      - avalon-reverse-proxy-net
 
 volumes:
-  code-server-data:
+  code-server-config:
